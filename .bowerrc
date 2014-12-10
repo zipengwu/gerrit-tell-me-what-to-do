@@ -1,0 +1,5 @@
+{
+    "directory": "bower_components",
+    "http-proxy": "http://proxy.ullink.lan:9876",
+    "https-proxy": "http://proxy.ullink.lan:9876"
+}
