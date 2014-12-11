@@ -10,6 +10,7 @@
 angular.module('gerritTellMeWhatToDoApp')
     .controller 'MainCtrl', ($scope, $mdSidenav, Change, NewsService) ->
         $scope.newsfeed = {}
+        # TODO for Zipeng, list change set status
         $scope.init = ->
             Change.query().then (res)->
                 data = res.data
@@ -24,11 +25,18 @@ angular.module('gerritTellMeWhatToDoApp')
                 return
             return
 
+        # TODO for Francois, list news with priority
         fetchNews = (change)->
             NewsService.getNews(change).then (data)->
                 for news in data
-                    if news.type is 'COMMENT'
-                        $scope.newsfeed[news.id] = news
+                    switch news.type
+                        when 'COMMENT'
+                            $scope.newsfeed[news.id] = news
+                        when 'REVIEW'
+                        # TODO
+                            $scope.newsfeed[news.id] = news
+                        else
+                            console.log "unknow news type #{news.type}"
                 return
             return
 
