@@ -10,11 +10,12 @@
 ###
 angular
   .module('gerritTellMeWhatToDoApp', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngResource',
+    'ngAnimate'
+    'ngAria'
+    'ngCookies'
+    'ngResource'
     'ngRoute'
+    'ngMaterial'
   ])
   .config ($routeProvider) ->
     $routeProvider
