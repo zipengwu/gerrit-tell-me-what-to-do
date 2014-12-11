@@ -19,34 +19,39 @@ angular.module('gerritTellMeWhatToDoApp')
                 else
                     result = data
                 $scope.changes = result
+                for change in $scope.changes
+                    populateComments change
                 return
             return
 
-        $scope.getComments = ->
-            $scope.comments  = []
-            for change in $scope.changes
-                change.files ?= {}
-                for revision in Object.keys(change.revisions)
-                    ChangeSetService.getComments(change, revision)
-                        .then (res)->
-                            _revision = res.data
-                            _change = res.passenger
-                            files = Object.keys(_revision)
-                            for file in files
-                                _change.files[file] ?= {}
-                                for comment in _revision[file]
-                                    if comment.in_reply_to?
-                                        _change.files[file][comment.in_reply_to] ?= {}
-                                        _change.files[file][comment.in_reply_to].children ?=[]
-                                        _change.files[file][comment.in_reply_to].children.push comment
-                                    else if _change.files[file][comment.id]?
-                                        children = _change.files[file][comment.id].children
-                                        _change.files[file][comment.id] = comment
-                                        _change.files[file][comment.id].children = children
-                                    else
-                                        _change.files[file][comment.id] = comment
-                                    # $scope.comments.push comment
-                            return
+        # $scope.getComments = ->
+        #     $scope.comments  = []
+        #     for change in $scope.changes
+        #         populateComments change
+        #     return
+
+        populateComments = (change)->
+            change.files ?= {}
+            for revision in Object.keys(change.revisions)
+                ChangeSetService.getComments(change, revision)
+                    .then (res)->
+                        _revision = res.data
+                        _change = res.passenger
+                        files = Object.keys(_revision)
+                        for file in files
+                            _change.files[file] ?= {}
+                            for comment in _revision[file]
+                                if comment.in_reply_to?
+                                    _change.files[file][comment.in_reply_to] ?= {}
+                                    _change.files[file][comment.in_reply_to].children ?=[]
+                                    _change.files[file][comment.in_reply_to].children.push comment
+                                else if _change.files[file][comment.id]?
+                                    children = _change.files[file][comment.id].children
+                                    _change.files[file][comment.id] = comment
+                                    _change.files[file][comment.id].children = children
+                                else
+                                    _change.files[file][comment.id] = comment
+                        return
             return
 
         $scope.getChangesets()
