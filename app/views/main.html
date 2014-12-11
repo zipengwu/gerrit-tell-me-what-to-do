@@ -24,19 +24,32 @@
     </md-list>
   </md-content>
 </md-sidenav>
-<md-content layout="column" layout-fill>
+<md-content layout="column" layout-fill layout-padding>
     <section layout="row" layout-align="center center">
         <!-- <md-button class="md-raised md-primary" ng-click="getChangesets()">get changesets</md-button> -->
         <md-button class="md-raised md-primary" ng-click="getComments()">get comments</md-button>
     </section>
-    <md-list>
-        <md-item ng-repeat="comment in comments">
-            <md-item-content>
-                <div class="md-tile-content">
-                    <h4>
-                        {{comment.message}}
-                    </h4>
-                </div>
+    <md-list flex>
+        <md-item ng-repeat="change in changes">
+            <md-item-content layout="column">
+                <h1>{{change.subject}}</h1>
+                <md-list>
+                    <md-item ng-repeat="(file, comments) in change.files">
+                        <md-item-content layout="column" layout-align="start start">
+                        <h3><span class="glyphicon glyphicon-file"></span>{{file}}</h3>
+                        <md-list>
+                            <md-item ng-repeat="comment in comments">
+                                <p>{{comment.message}}</p>
+                                <md-list>
+                                    <md-item ng-repeat="reply in comment.children">
+                                        <p> <span class="glyphicon glyphicon-chevron-right"></span> {{reply.message}}</p>
+                                    </md-item>
+                                </md-list>
+                            </md-item>
+                        </md-list>
+                        </md-item-content>
+                    </md-item>
+                </md-list>
             </md-item-content>
             <md-divider ng-if="!$last"></md-divider>
         </md-item>

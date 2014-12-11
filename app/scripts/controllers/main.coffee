@@ -10,7 +10,8 @@
 angular.module('gerritTellMeWhatToDoApp')
     .controller 'MainCtrl', ($scope, $mdSidenav, ChangeSetService) ->
         $scope.getChangesets = ->
-            ChangeSetService.getChangesets().then (data)->
+            ChangeSetService.getChangesets().then (res)->
+                data = res.data
                 result = []
                 if data[0] instanceof Array
                     for arr in data
@@ -24,12 +25,27 @@ angular.module('gerritTellMeWhatToDoApp')
         $scope.getComments = ->
             $scope.comments  = []
             for change in $scope.changes
+                change.files ?= {}
                 for revision in Object.keys(change.revisions)
-                    ChangeSetService.getComments(change.id, revision)
-                        .then (rev)->
-                            files = Object.keys(rev)
+                    ChangeSetService.getComments(change, revision)
+                        .then (res)->
+                            _revision = res.data
+                            _change = res.passenger
+                            files = Object.keys(_revision)
                             for file in files
-                                $scope.comments.push comment for comment in rev[file]
+                                _change.files[file] ?= {}
+                                for comment in _revision[file]
+                                    if comment.in_reply_to?
+                                        _change.files[file][comment.in_reply_to] ?= {}
+                                        _change.files[file][comment.in_reply_to].children ?=[]
+                                        _change.files[file][comment.in_reply_to].children.push comment
+                                    else if _change.files[file][comment.id]?
+                                        children = _change.files[file][comment.id].children
+                                        _change.files[file][comment.id] = comment
+                                        _change.files[file][comment.id].children = children
+                                    else
+                                        _change.files[file][comment.id] = comment
+                                    # $scope.comments.push comment
                             return
             return
 
