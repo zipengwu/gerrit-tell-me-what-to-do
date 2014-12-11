@@ -14,11 +14,11 @@ angular.module('gerritTellMeWhatToDoApp')
 
         @getChangesets = ->
             query = "/changes/?q=is:open+owner:self&q=is:open+reviewer:self+-owner:self&o=ALL_REVISIONS"
-            plugin_get(host + query)
+            http_get(host + query)
 
         @getComments = (change, revision)->
             query = "/changes/#{change.id}/revisions/#{revision}/comments/"
-            plugin_get(host + query, change)
+            http_get(host + query, change)
 
         http_get = (url, passenger)->
             deferred = $q.defer()

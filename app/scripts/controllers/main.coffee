@@ -8,7 +8,7 @@
  # Controller of the gerritTellMeWhatToDoApp
 ###
 angular.module('gerritTellMeWhatToDoApp')
-    .controller 'MainCtrl', ($scope, $mdSidenav, ChangeSetService) ->
+    .controller 'MainCtrl', ($scope, $mdSidenav, ChangeSetService, NewsService) ->
         $scope.getChangesets = ->
             ChangeSetService.getChangesets().then (res)->
                 data = res.data
@@ -20,7 +20,10 @@ angular.module('gerritTellMeWhatToDoApp')
                     result = data
                 $scope.changes = result
                 for change in $scope.changes
-                    populateComments change
+                    # populateComments change
+                    NewsService.getNews(change).then (data)->
+                        console.log data
+                        return
                 return
             return
 
