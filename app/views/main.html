@@ -1,40 +1,40 @@
 <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="changeset" md-is-locked-open="true" flex="30">
-  <md-toolbar layout="row" layout-align="center center">
-    <h1>Change Sets</h1>
-  </md-toolbar>
-  <md-content>
-    <md-list>
-      <md-item ng-repeat="change in changes">
-      <md-item-content>
-          <div class="md-tile-content">
-                <h3>{{change.subject}}</h3>
-                <h4>{{change.owner.name}}</h4>
-                <p>project: {{change.project}}</p>
-                <p>updated: {{change.updated.split('.')[0]}}</p>
-                <p>changeId: {{change.change_id}}</p>
-          </div>
-          <div class="md-tile-right">
-            <h2 style="float:left">+1</h2>
-            <img src="/images/robot.png">
-            <img src="/images/jenkins-pass.png">
-          </div>
-      </md-item-content>
-      <md-divider ng-if="!$last"></md-divider>
-      </md-item>
-    </md-list>
-  </md-content>
+	<md-toolbar layout="row" layout-align="center center">
+		<h3>Change Sets</h3>
+	</md-toolbar>
+	<md-content>
+		<md-list>
+			<md-item ng-repeat="change in changes">
+			<md-item-content>
+					<div class="md-tile-content">
+								<h3>{{change.subject}}</h3>
+								<h4>{{change.owner.name}}</h4>
+								<p>project: {{change.project}}</p>
+								<p>updated: {{change.updated.split('.')[0]}}</p>
+								<p>changeId: {{change.change_id}}</p>
+					</div>
+					<div class="md-tile-right">
+						<h2 style="float:left">+1</h2>
+						<img src="/images/robot.png">
+						<img src="/images/jenkins-pass.png">
+					</div>
+			</md-item-content>
+			<md-divider ng-if="!$last"></md-divider>
+			</md-item>
+		</md-list>
+	</md-content>
 </md-sidenav>
 <md-content layout="column" layout-fill style="padding-left: 2em">
 <md-list>
-    <md-item ng-repeat="(id, news) in newsfeed">
-        <md-item-content>
-            <div class="md-tile-content">
-                <h3>{{news.message}}</h3>
-                <h4>{{news.timestamp.split('.')[0]}}</h4>
-                <p>{{news.file}}</p>
-            </div>
-        </md-item-content>
-        <md-divider ng-if="!$last"></md-divider>
-    </md-item>
+		<md-item ng-repeat="(id, news) in newsfeed">
+				<md-item-content>
+						<div class="md-tile-content">
+								<h3>{{news.message}}</h3>
+								<h4>{{news.timestamp.split('.')[0]}}</h4>
+								<p>{{news.file}}</p>
+						</div>
+				</md-item-content>
+				<md-divider ng-if="!$last"></md-divider>
+		</md-item>
 </md-list>
 </md-content>
