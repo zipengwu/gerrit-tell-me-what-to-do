@@ -24,12 +24,6 @@ angular.module('gerritTellMeWhatToDoApp')
                 return
             return
 
-        # $scope.getComments = ->
-        #     $scope.comments  = []
-        #     for change in $scope.changes
-        #         populateComments change
-        #     return
-
         populateComments = (change)->
             change.files ?= {}
             for revision in Object.keys(change.revisions)
