@@ -10,15 +10,15 @@
 								<h3>{{change.subject}}</h3>
 								<h4>{{change.owner.name}}</h4>
 								<p>project: {{change.project}}</p>
-								<p>updated: {{change.updated.split('.')[0]}}</p>
+								<p>updated: {{change.updated | formatmoment}}</p>
 								<p>changeId: {{change.change_id}}</p>
 					</div>
-					<div class="md-tile-right" style="padding-right:0.8em">
-						<h2 style="float:left">{{change.reviewGrade}}</h2>
-						<img src="/images/robot-pass.png" ng-show="change.robotGrade == 1">
-						<img src="/images/robot-fail.png" ng-show="change.robotGrade == -1">
+					<div class="md-tile-right" style="padding-right:0.5em">
+						<h2 style="float:left; padding-right:0.2em">{{change.reviewGrade}}</h2>
 						<img src="/images/jenkins-pass.png" ng-show="change.jenkinsGrade == 1">
 						<img src="/images/jenkins-fail.png" ng-show="change.jenkinsGrade == -1">
+						<img src="/images/robot-pass.png" ng-show="change.robotGrade == 1">
+						<img src="/images/robot-fail.png" ng-show="change.robotGrade == -1">
 					</div>
 			</md-item-content>
 			<md-divider ng-if="!$last"></md-divider>
