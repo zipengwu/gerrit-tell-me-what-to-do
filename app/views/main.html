@@ -33,7 +33,7 @@
 	    {{ globaltimestamp | unixdate }}
 	</div>
 	<md-whiteframe class="md-whiteframe-z1">
-	<div ng-repeat="news in newsfeed | orderBy:'-timestamp' | filter:isNotLastAuthor | filter:isNotEmpty">
+	<div ng-repeat="news in newsfeed | orderBy:'timestamp' | filter:isNotLastAuthor | filter:isNotEmpty">
 		<md-toolbar>
 			<h1 class="md-toolbar-tools">
 			  <span>{{ news.change }}</span>
