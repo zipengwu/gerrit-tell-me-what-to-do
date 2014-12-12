@@ -17,6 +17,7 @@ angular.module('gerritTellMeWhatToDoApp')
 
 		# TODO for Zipeng, list change set status
 		$scope.init = ->
+			$scope.globaltimestamp = 1418086800
 			Change.query().then (res)->
 				data = res.data
 				result = []
@@ -50,8 +51,8 @@ angular.module('gerritTellMeWhatToDoApp')
 			return
 
 		$scope.isExpanded = (value, index) ->
-			console.log value.thread.expanded
-			console.log moment.unix($scope.globaltimestamp)
+#			console.log value.thread.expanded
+#			console.log moment.unix($scope.globaltimestamp)
 			value.thread.expanded or moment(value.timestamp).isAfter moment.unix($scope.globaltimestamp)
 
 		$scope.isNotEmpty = (value, index) ->
@@ -62,6 +63,10 @@ angular.module('gerritTellMeWhatToDoApp')
 
 		$scope.isNotLastAuthor = (value, index) ->
 			value.lastComment.authorName isnt "Yi Han"
+
+		$scope.lastCommentDisplayed = (value) ->
+			console.log value
+			value.timestamp
 
 		$scope.init()
 

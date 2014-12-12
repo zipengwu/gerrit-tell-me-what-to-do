@@ -11,6 +11,7 @@ angular.module 'gerritTellMeWhatToDoApp'
 						for gerritComment in results
 							for file, fileComments of gerritComment.data
 								for comment in fileComments
+									console.log comment
 									news[comment.id] = {
 										type: 'COMMENT'
 										id: comment.id
@@ -55,6 +56,7 @@ angular.module 'gerritTellMeWhatToDoApp'
 							threads[parent.id].lastComment = parent
 							threads[parent.id].change = change.subject
 							threads[parent.id].gerritId = change._number
+#							console.log comment
 							threads[parent.id].expanded = false
 #							console.log change
 						timestamp = moment(comment.timestamp)
