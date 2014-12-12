@@ -28,10 +28,16 @@
 </md-sidenav>
 <md-content layout="column" layout-fill style="padding-left: 1em">
 	<md-whiteframe class="md-whiteframe-z1">
-	<div ng-repeat="news in newsfeed">
+	<div ng-repeat="news in newsfeed | orderBy:'-timestamp' | filter:isNotLastAuthor">
 		<md-toolbar>
 			<h1 class="md-toolbar-tools">
 			  <span>{{ news.change }}</span>
+				<md-button ng-href="http://git.ullink.lan:8080/#/c/{{news.gerritId}}/" target="_blank" class="md-raised md-primary" aria-label="Comment">
+					Go to Gerrit
+				</md-button>
+				<md-button ng-click="news.expanded = true" class="md-raised md-primary" aria-label="Comment">
+					Expand thread
+				</md-button>
 			</h1>
 		</md-toolbar>
 		<div class="gerrit-filename">
@@ -43,7 +49,7 @@
 				<md-item-content>
 				  <div class="md-tile-content">
 					<p>
-					  {{comment.authorName}}: {{comment.message}}
+					  <strong>{{comment.authorName}}:</strong> {{comment.message}}
 					</p>
 				  </div>
 				</md-item-content>

@@ -36,7 +36,7 @@ angular.module('gerritTellMeWhatToDoApp')
 			NewsService.getNews(change).then (data2)->
 				for threadId, thread of data2
 					$scope.newsfeed.push thread
-					console.log thread
+#					console.log thread
 #				for news in data
 #					switch news.type
 #						when 'COMMENT'
@@ -50,8 +50,13 @@ angular.module('gerritTellMeWhatToDoApp')
 			return
 
 		$scope.isExpanded = (value, index) ->
-			console.log "expand #{value}"
+			console.log value.thread.expanded
+			console.log value.timestamp
+#			console.log "expand #{value}"
 			true
+
+		$scope.isNotLastAuthor = (value, index) ->
+			value.lastComment.authorName isnt "Yi Han"
 
 		$scope.init()
 

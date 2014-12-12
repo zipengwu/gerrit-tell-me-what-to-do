@@ -26,7 +26,7 @@ angular.module 'gerritTellMeWhatToDoApp'
 				news = []
 
 				for index, message of change.messages
-					console.log(message)
+#					console.log(message)
 					if reviewMatch = reviewPattern.exec(message.message)
 						news.push {
 							type: 'REVIEW'
@@ -52,10 +52,17 @@ angular.module 'gerritTellMeWhatToDoApp'
 							threads[parent.id].comments = []
 							threads[parent.id].file = parent.file
 							threads[parent.id].timestamp = moment(parent.timestamp)
+							threads[parent.id].lastComment = parent
 							threads[parent.id].change = change.subject
+							threads[parent.id].gerritId = change._number
+							threads[parent.id].expanded = false
+#							console.log change
 						timestamp = moment(comment.timestamp)
 						threads[parent.id].comments.push comment
-						threads[parent.id].timestamp = timestamp if timestamp.isAfter threads[parent.id].timestamp
+						comment.thread = threads[parent.id]
+						if timestamp.isAfter threads[parent.id].timestamp
+							threads[parent.id].timestamp = timestamp
+							threads[parent.id].lastComment = comment
 #					console.log threads
 					results
 					threads
