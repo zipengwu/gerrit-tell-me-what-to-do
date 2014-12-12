@@ -5,7 +5,7 @@
 	<md-content>
 		<md-list>
 			<md-item ng-repeat="change in changes">
-			<md-item-content>
+			<md-item-content ng-click="select(change)" class="gerrit-change">
 					<div class="md-tile-content">
 								<h3>{{change.subject}}</h3>
 								<h4>{{change.owner.name}}</h4>

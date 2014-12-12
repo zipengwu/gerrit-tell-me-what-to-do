@@ -8,8 +8,13 @@
  # Controller of the gerritTellMeWhatToDoApp
 ###
 angular.module('gerritTellMeWhatToDoApp')
-	.controller 'MainCtrl', ($scope, $mdSidenav, Change, NewsService) ->
+	.controller 'MainCtrl', ($scope, $mdSidenav, Change, NewsService, HistoryService) ->
 		$scope.newsfeed = {}
+		$scope.select = (change) ->
+			$scope.newsfeed = {}
+			fetchNews change
+			return
+
 		# TODO for Zipeng, list change set status
 		$scope.init = ->
 			Change.query().then (res)->
