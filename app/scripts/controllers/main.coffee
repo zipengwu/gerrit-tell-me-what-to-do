@@ -11,7 +11,7 @@ angular.module('gerritTellMeWhatToDoApp')
 	.controller 'MainCtrl', ($scope, $mdSidenav, Change, NewsService, HistoryService) ->
 		$scope.newsfeed = []
 		$scope.select = (change) ->
-			$scope.newsfeed = {}
+			$scope.newsfeed = []
 			fetchNews change
 			return
 
