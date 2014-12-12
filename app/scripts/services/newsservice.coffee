@@ -68,6 +68,10 @@ angular.module 'gerritTellMeWhatToDoApp'
 					threads
 					deferred.resolve(threads)
 				deferred.promise
+	.filter 'unixdate', () ->
+		(input) -> moment.unix input
+	.filter 'formatmoment', () ->
+		(input) -> moment(input).fromNow()
 #				gerritComments = (Comment.query(change.id, revisionId) for revisionId, revision of change.revisions)
 #				$q.all(gerritComments).then (results) ->
 #					for gerritComment in results

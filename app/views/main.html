@@ -27,8 +27,11 @@
 	</md-content>
 </md-sidenav>
 <md-content layout="column" layout-fill style="padding-left: 1em">
+	<md-slider md-discrete ng-model="globaltimestamp" step="1" min="1418086800" max="1418234400" aria-label="rating" style="margin-top: 2em; padding-right: 1em">
+    </md-slider>
+	{{ globaltimestamp | unixdate }}
 	<md-whiteframe class="md-whiteframe-z1">
-	<div ng-repeat="news in newsfeed | orderBy:'-timestamp' | filter:isNotLastAuthor">
+	<div ng-repeat="news in newsfeed | orderBy:'-timestamp' | filter:isNotLastAuthor | filter:isNotEmpty">
 		<md-toolbar>
 			<h1 class="md-toolbar-tools">
 			  <span>{{ news.change }}</span>
@@ -49,7 +52,8 @@
 				<md-item-content>
 				  <div class="md-tile-content">
 					<p>
-					  <strong>{{comment.authorName}}:</strong> {{comment.message}}
+					  <strong>{{comment.authorName}}:</strong> {{comment.message}}<br>
+						{{comment.timestamp | formatmoment}}
 					</p>
 				  </div>
 				</md-item-content>

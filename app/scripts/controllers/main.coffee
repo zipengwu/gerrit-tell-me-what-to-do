@@ -51,9 +51,14 @@ angular.module('gerritTellMeWhatToDoApp')
 
 		$scope.isExpanded = (value, index) ->
 			console.log value.thread.expanded
-			console.log value.timestamp
-#			console.log "expand #{value}"
-			true
+			console.log moment.unix($scope.globaltimestamp)
+			value.thread.expanded or moment(value.timestamp).isAfter moment.unix($scope.globaltimestamp)
+
+		$scope.isNotEmpty = (value, index) ->
+			for comment in value.comments
+				if moment(comment.timestamp).isAfter moment.unix($scope.globaltimestamp)
+					return true
+			return false
 
 		$scope.isNotLastAuthor = (value, index) ->
 			value.lastComment.authorName isnt "Yi Han"
