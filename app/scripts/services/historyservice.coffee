@@ -41,4 +41,9 @@ angular.module 'gerritTellMeWhatToDoApp'
 			change.jenkinsGrade = _jenkinsGrade messages
 			change.robotGrade = _robotGrade messages
 			return
+		getLastRevisionNumber: (change) ->
+			lastRevisionNumber = 0
+			lastRevisionNumber = message._revision_number if lastRevisionNumber < message._revision_number for message in change.messages
+			return lastRevisionNumber
+
 
