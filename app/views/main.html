@@ -34,7 +34,9 @@
 			  <span>{{ news.change }}</span>
 			</h1>
 		</md-toolbar>
-		<div class="gerrit-filename">{{news.file}}</div>
+		<div class="gerrit-filename">
+			<span class="glyphicon glyphicon-file" style="padding-right:0.5em"></span>{{news.file}}
+		</div>
 		  <md-content>
 			<md-list>
 			  <md-item ng-repeat="comment in news.comments | orderBy:'timestamp' | filter:isExpanded">
