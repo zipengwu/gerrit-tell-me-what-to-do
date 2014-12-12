@@ -9,7 +9,7 @@
 ###
 angular.module('gerritTellMeWhatToDoApp')
 	.controller 'MainCtrl', ($scope, $mdSidenav, Change, NewsService, HistoryService) ->
-		$scope.newsfeed = {}
+		$scope.newsfeed = []
 		$scope.select = (change) ->
 			$scope.newsfeed = {}
 			fetchNews change
@@ -33,18 +33,25 @@ angular.module('gerritTellMeWhatToDoApp')
 
 		# TODO for Francois, list news with priority
 		fetchNews = (change)->
-			NewsService.getNews(change).then (data)->
-				for news in data
-					switch news.type
-						when 'COMMENT'
-							$scope.newsfeed[news.id] = news
-						when 'REVIEW'
-						# TODO
-							$scope.newsfeed[news.id] = news
-						else
-							console.log "unknow news type #{news.type}"
+			NewsService.getNews(change).then (data2)->
+				for threadId, thread of data2
+					$scope.newsfeed.push thread
+					console.log thread
+#				for news in data
+#					switch news.type
+#						when 'COMMENT'
+#							$scope.newsfeed[news.id] = news
+#						when 'REVIEW'
+#						# TODO
+#							$scope.newsfeed[news.id] = news
+#						else
+#							console.log "unknow news type #{news.type}"
 				return
 			return
+
+		$scope.isExpanded = (value, index) ->
+			console.log "expand #{value}"
+			true
 
 		$scope.init()
 

@@ -27,16 +27,39 @@
 	</md-content>
 </md-sidenav>
 <md-content layout="column" layout-fill style="padding-left: 2em">
-<md-list>
-		<md-item ng-repeat="(id, news) in newsfeed">
+	<md-whiteframe class="md-whiteframe-z1">
+	<div ng-repeat="news in newsfeed">
+		<md-toolbar>
+			<h1 class="md-toolbar-tools">
+			  <span>{{ news.change }}</span>
+			</h1>
+		</md-toolbar>
+		  <md-content>
+			<md-list>
+			  <md-item ng-repeat="comment in news.comments | orderBy:'timestamp' | filter:isExpanded">
 				<md-item-content>
-						<div class="md-tile-content">
-								<h3>{{news.message}}</h3>
-								<h4>{{news.timestamp.split('.')[0]}}</h4>
-								<p>{{news.file}}</p>
-						</div>
+				  <div class="md-tile-content">
+					<p>
+					  {{comment.authorName}}: {{comment.message}}
+					</p>
+				  </div>
 				</md-item-content>
 				<md-divider ng-if="!$last"></md-divider>
-		</md-item>
-</md-list>
+			  </md-item>
+			</md-list>
+		  </md-content>
+	</div>
+  	</md-whiteframe>
+<!--<md-list>-->
+		<!--<md-item ng-repeat="(id, news) in newsfeed">-->
+				<!--<md-item-content>-->
+						<!--<div class="md-tile-content">-->
+								<!--<h3>{{news.message}}</h3>-->
+								<!--<h4>{{news.timestamp.split('.')[0]}}</h4>-->
+								<!--<p>{{news.file}}</p>-->
+						<!--</div>-->
+				<!--</md-item-content>-->
+				<!--<md-divider ng-if="!$last"></md-divider>-->
+		<!--</md-item>-->
+<!--</md-list>-->
 </md-content>

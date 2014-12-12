@@ -2,7 +2,27 @@ reviewPattern = /^Patch Set (\d+):( Code-Review([+-]?\d))?(\s+\((\d+) comment\))
 
 angular.module 'gerritTellMeWhatToDoApp'
 	.factory 'NewsService', ($http, $q, Comment) ->
+
 			getNews: (change, limit) ->
+				getCommentList = (change) ->
+					news = {}
+					gerritComments = (Comment.query(change.id, revisionId) for revisionId, revision of change.revisions)
+					$q.all(gerritComments).then (results) ->
+						for gerritComment in results
+							for file, fileComments of gerritComment.data
+								for comment in fileComments
+									news[comment.id] = {
+										type: 'COMMENT'
+										id: comment.id
+										parent: comment.in_reply_to
+										message: comment.message
+										file: file
+										authorId: comment.author._account_id
+										authorName: comment.author.name
+										timestamp: comment.updated
+									}
+						news
+
 				news = []
 
 				for index, message of change.messages
@@ -18,17 +38,41 @@ angular.module 'gerritTellMeWhatToDoApp'
 							timestamp: message.date
 						}
 
-				gerritComments = (Comment.query(change.id, revisionId) for revisionId, revision of change.revisions)
-				$q.all(gerritComments).then (results) ->
-					for gerritComment in results
-						for file, fileComments of gerritComment.data
-							for comment in fileComments
-								news.push {
-									type: 'COMMENT'
-									id: comment.id
-									message: comment.message
-									file: file
-									authorId: comment.author._account_id
-									timestamp: comment.updated
-								}
-					news
+				deferred = $q.defer()
+				getCommentList(change).then (results) ->
+#					console.log(results)
+					threads = {}
+					for commentId, comment of results
+						parent = comment
+						while parent.parent
+							parent = results[parent.parent]
+#						console.log "parent of #{comment.id} is #{parent.id}"
+						if not threads[parent.id]
+							threads[parent.id] = {}
+							threads[parent.id].comments = []
+							threads[parent.id].file = parent.file
+							threads[parent.id].timestamp = moment(parent.timestamp)
+							threads[parent.id].change = change.subject
+						timestamp = moment(comment.timestamp)
+						threads[parent.id].comments.push comment
+						threads[parent.id].timestamp = timestamp if timestamp.isAfter threads[parent.id].timestamp
+#					console.log threads
+					results
+					threads
+					deferred.resolve(threads)
+				deferred.promise
+#				gerritComments = (Comment.query(change.id, revisionId) for revisionId, revision of change.revisions)
+#				$q.all(gerritComments).then (results) ->
+#					for gerritComment in results
+#						for file, fileComments of gerritComment.data
+#							for comment in fileComments
+#								news.push {
+#									type: 'COMMENT'
+#									id: comment.id
+#									message: comment.message
+#									file: file
+#									authorId: comment.author._account_id
+#									timestamp: comment.updated
+#								}
+#					news
+
