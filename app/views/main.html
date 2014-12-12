@@ -14,9 +14,11 @@
 								<p>changeId: {{change.change_id}}</p>
 					</div>
 					<div class="md-tile-right">
-						<h2 style="float:left">+1</h2>
-						<img src="/images/robot.png">
-						<img src="/images/jenkins-pass.png">
+						<h2 style="float:left">{{change.reviewGrade}}</h2>
+						<img src="/images/robot-pass.png" ng-show="change.robotGrade == 1">
+						<img src="/images/robot-fail.png" ng-show="change.robotGrade == -1">
+						<img src="/images/jenkins-pass.png" ng-show="change.jenkinsGrade == 1">
+						<img src="/images/jenkins-fail.png" ng-show="change.jenkinsGrade == -1">
 					</div>
 			</md-item-content>
 			<md-divider ng-if="!$last"></md-divider>

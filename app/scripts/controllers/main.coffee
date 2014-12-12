@@ -26,6 +26,7 @@ angular.module('gerritTellMeWhatToDoApp')
 				else
 					result = data
 				$scope.changes = result
+				HistoryService.grade(change) for change in $scope.changes
 				fetchNews(change) for change in $scope.changes
 				return
 			return
