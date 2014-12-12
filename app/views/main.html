@@ -13,7 +13,7 @@
 								<p>updated: {{change.updated.split('.')[0]}}</p>
 								<p>changeId: {{change.change_id}}</p>
 					</div>
-					<div class="md-tile-right">
+					<div class="md-tile-right" style="padding-right:0.8em">
 						<h2 style="float:left">{{change.reviewGrade}}</h2>
 						<img src="/images/robot-pass.png" ng-show="change.robotGrade == 1">
 						<img src="/images/robot-fail.png" ng-show="change.robotGrade == -1">
@@ -26,7 +26,7 @@
 		</md-list>
 	</md-content>
 </md-sidenav>
-<md-content layout="column" layout-fill style="padding-left: 2em">
+<md-content layout="column" layout-fill style="padding-left: 1em">
 	<md-whiteframe class="md-whiteframe-z1">
 	<div ng-repeat="news in newsfeed">
 		<md-toolbar>
@@ -34,6 +34,7 @@
 			  <span>{{ news.change }}</span>
 			</h1>
 		</md-toolbar>
+		<div class="gerrit-filename">{{news.file}}</div>
 		  <md-content>
 			<md-list>
 			  <md-item ng-repeat="comment in news.comments | orderBy:'timestamp' | filter:isExpanded">

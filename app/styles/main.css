@@ -5,8 +5,11 @@
 	background-color: #E0E0E0;
 }
 
-
-
+.gerrit-filename{
+	background-color: #009688;
+	color:white;
+	padding: 0 0 0.5em 1em;
+}
 
 
 @font-face {
